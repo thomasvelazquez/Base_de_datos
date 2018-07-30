@@ -45,8 +45,10 @@ WHERE film_id = 1;
 DELETE FROM film
 WHERE film_id = 1;
 
-6)INSERT INTO rental(rental_id,rental_date,inventory_id,customer_id,staff_id)
-VALUES(16.052,
-	   CURRENT_DATE,
-	   (SELECT inventory_id from inventory where film_id=1),
-	   (sel)),
+6)INSERT INTO rental(rental_date,inventory_id,customer_id,staff_id)
+VALUES(
+	   CURRENT_DATE(),
+	   (SELECT inventory_id from inventory where film_id=1 LIMIT 1),
+	   (SELECT customer.customer_id FROM customer LIMIT 1),
+	   (SELECT staff.staff_id FROM film INNER JOIN inventory USING (film_id) INNER JOIN store USING (store_id) INNER JOIN staff USING (store_id) WHERE film.film_id=1 LIMIT 1)
+	   )
