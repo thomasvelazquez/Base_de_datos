@@ -52,3 +52,10 @@ VALUES(
 	   (SELECT customer.customer_id FROM customer LIMIT 1),
 	   (SELECT staff.staff_id FROM film INNER JOIN inventory USING (film_id) INNER JOIN store USING (store_id) INNER JOIN staff USING (store_id) WHERE film.film_id=1 LIMIT 1)
 	   )
+INSERT INTO payment(customer_id,staff_id,rental_id,amount,payment_date)
+VALUES (
+        (SELECT customer_id FROM rental ORDER BY rental_id DESC LIMIT 1 ),
+        (SELECT staff_id FROM rental ORDER BY rental_id DESC LIMIT 1),
+        (SELECT rental_id FROM rental ORDER BY rental_id DESC LIMIT 1),
+        (SELECT replacement_cost FROM film WHERE film_id=1),
+        CURRENT_DATE());
